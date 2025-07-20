@@ -1,45 +1,29 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     @include('admin.css')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
-      integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"></script>
-    <style type="text/css">
-      .div_deg {
-        text-align: center;
-        margin: auto;
-      }
-      .title_deg {
-        color: white;
-        padding: 40px;
-        font-size: 30px;
-        font-weight: bold;
-      }
-    </style>
-  </head>
-  <body>
-    @include('admin.header')
-    <div class="d-flex align-items-stretch">
-      @include('admin.sidebar')
-      <div class="page-content">
-        <div class="page-header">
-          <div class="container-fluid">
-            <div class="div_deg">
-              <h2 class="title_deg">Update Category</h2>
-              <form action="{{ route('update_category', $category->id) }}" method="post">
+</head>
+<body>
+@include('admin.header')
+<div class="d-flex align-items-stretch">
+    @include('admin.sidebar')
+    <div class="page-content" style="padding:2rem; background:#f5f6fa; min-height:100vh;">
+        <div class="container" style="max-width:500px; margin:auto;">
+            <h2 style="font-size:1.4rem; font-weight:600; margin-bottom:1.5rem; color:#222; text-align:center;">Update Category</h2>
+            <form action="{{ route('update_category', $category->id) }}" method="post" style="background:#fff; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.03); padding:2rem;">
                 @csrf
-                <label for="">Category Name</label>
-                <input type="text" name="cat_name" value="{{ $category->cat_title }}">
-                <input type="submit" class="btn btn-info" value="Update">
-              </form>
-            </div>
-          </div>
+                <div class="mb-3">
+                    <label>Category Name</label>
+                    <input type="text" name="cat_name" value="{{ $category->cat_title }}" class="form-control" required>
+                </div>
+                <div class="text-center">
+                    <input type="submit" class="btn btn-primary" value="Update" style="border-radius:6px; padding:0.5rem 2rem;">
+                </div>
+            </form>
         </div>
-      </div>
     </div>
-    @include('admin.footer')
+</div>
+@include('admin.footer')
 
     <script>
         // Check if there is a success message in the session
@@ -52,5 +36,5 @@
             });
         @endif
     </script>
-  </body>
+</body>
 </html>

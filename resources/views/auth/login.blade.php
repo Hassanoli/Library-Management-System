@@ -1,66 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-    @include('home.css')
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f5faff 0%, #f0f4ff 100%);
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .auth-card {
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 4px 24px rgba(79,140,255,0.10);
+            padding: 2.5rem 2rem 2rem 2rem;
+            width: 100%;
+            max-width: 400px;
+        }
+        .auth-card h2 {
+            text-align: center;
+            color: #4f8cff;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        .form-group { margin-bottom: 1.2rem; }
+        label { display: block; margin-bottom: 0.5rem; color: #222; font-weight: 500; }
+        input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            border: 1px solid #e0e6ed;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: #f8fbff;
+            transition: border 0.2s;
+        }
+        input:focus { border: 1.5px solid #4f8cff; outline: none; background: #fff; }
+        .btn-primary {
+            width: 100%;
+            background: #4f8cff;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 0.8rem 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+            cursor: pointer;
+            transition: background 0.18s;
+        }
+        .btn-primary:hover { background: #2563eb; }
+        .google-btn {
+            margin-top: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+            border: 1px solid #e0e6ed;
+            color: #222;
+            border-radius: 8px;
+            padding: 0.7rem 0;
+            font-weight: 600;
+            cursor: pointer;
+            transition: box-shadow 0.18s;
+            box-shadow: 0 2px 8px rgba(79,140,255,0.06);
+        }
+        .google-btn img { height: 22px; margin-right: 10px; }
+        .google-btn:hover { box-shadow: 0 4px 16px rgba(79,140,255,0.13); }
+        .text-link { color: #4f8cff; text-decoration: none; font-size: 0.97rem; }
+        .text-link:hover { text-decoration: underline; }
+        .remember-me { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; }
+        .alert { background: #eaf3ff; color: #2563eb; border-radius: 6px; padding: 0.7rem 1rem; margin-bottom: 1rem; text-align: center; }
+    </style>
 </head>
-
 <body>
-
-    @include('home.header')
-
-    <x-guest-layout>
-        <x-authentication-card>
-            <x-slot name="logo">
-                
-            </x-slot>
-                      
-    
-            <x-validation-errors class="mb-4" />
-    
-            @if (session('status'))
-                <div class="mb-4 font-medium text-sm text-green-600">
-                    {{ session('status') }}
-                </div>
-            @endif
-    
-            <form method="POST" action="{{ route('login') }}">
-                @csrf
-    
-                <div>
-                    <x-label for="email" value="{{ __('Email') }}" />
-                    <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-                </div>
-    
-                <div class="mt-4">
-                    <x-label for="password" value="{{ __('Password') }}" />
-                    <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
-                </div>
-    
-                <div class="block mt-4">
-                    <label for="remember_me" class="flex items-center">
-                        <x-checkbox id="remember_me" name="remember" />
-                        <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-                    </label>
-                </div>
-    
-                <div class="flex items-center justify-end mt-4">
-                    @if (Route::has('password.request'))
-                        <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                            {{ __('Forgot your password?') }}
-                        </a>
-                    @endif
-    
-                    <x-button class="ms-4">
-                        {{ __('Log in') }}
-                    </x-button>
-                </div>
-    
-                <!-- Google Sign-In Button with Logo -->
-                <div class="mt-4">
-                    <a href="{{ url('auth/google') }}" class="flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300 ease-in-out">
-                        <img src="data:image/png;base64,
+    <div class="auth-card">
+        <h2>Login</h2>
+        <x-validation-errors class="mb-4" />
+        @if (session('status'))
+            <div class="alert">{{ session('status') }}</div>
+        @endif
+        <form method="POST" action="{{ route('login') }}">
+            @csrf
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input id="password" type="password" name="password" required autocomplete="current-password">
+            </div>
+            <div class="remember-me">
+                <input id="remember_me" type="checkbox" name="remember">
+                <label for="remember_me" style="margin-bottom:0;">Remember me</label>
+            </div>
+            <button type="submit" class="btn-primary">Log in</button>
+            <div style="margin-top:1rem; text-align:right;">
+                @if (Route::has('password.request'))
+                    <a class="text-link" href="{{ route('password.request') }}">Forgot your password?</a>
+                @endif
+            </div>
+        </form>
+        <a href="{{ url('auth/google') }}" class="google-btn">
+           <img src="data:image/png;base64,
                         iVBORw0KGgoAAAANSUhEUgAAAOEAAADh
                         CAMAAAAJbSJIAAABUFBMVEX////qQzU0q
                         FNChfT7vAUvfPPe6P06gfSHrPc1f/SxyPr7
@@ -135,18 +181,12 @@
                         Ca1XF0Set6Q5W3SQDdUSRJ1QBfUeFIt9oC3EHwLV6hzW/ygslkZFtCNa3bGmo7+cXzMKl2xroR7KmabqYc6sb
                         NMtC9GnVaoq5P75hY10ym/1iXTnRdbLVHN0z/wAY1ml37ntDo1mI0qlZvriZLW7UVK1asWLFiRfL4H/1Isc7V
                         uwGnAAAAAElFTkSuQmCC" alt="Google Logo" class="h-5 w-5 mr-3">
-                        
-                        <span class="text-sm font-semibold">{{ __('Sign in with Google') }}</span>
-                    </a>
-                </div>
-                
-            </form>
-        </x-authentication-card>
-    </x-guest-layout>
-    
-
-    @include('home.footer')
-    
+            <span>Sign in with Google</span>
+        </a>
+        <div style="margin-top:1.5rem; text-align:center;">
+            <span style="color:#888;">Don't have an account?</span>
+            <a href="{{ route('register') }}" class="text-link">Register</a>
+        </div>
+    </div>
 </body>
-
 </html>
