@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    @include('home.css')
+</head>
+
+<body>
+
+    @include('home.header')
+
+    <x-guest-layout>
+        <x-authentication-card>
+            <x-slot name="logo">
+                
+            </x-slot>
+                      
+    
+            <x-validation-errors class="mb-4" />
+    
+            @if (session('status'))
+                <div class="mb-4 font-medium text-sm text-green-600">
+                    {{ session('status') }}
+                </div>
+            @endif
+    
+            <form method="POST" action="{{ route('login') }}">
+                @csrf
+    
+                <div>
+                    <x-label for="email" value="{{ __('Email') }}" />
+                    <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+                </div>
+    
+                <div class="mt-4">
+                    <x-label for="password" value="{{ __('Password') }}" />
+                    <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
+                </div>
+    
+                <div class="block mt-4">
+                    <label for="remember_me" class="flex items-center">
+                        <x-checkbox id="remember_me" name="remember" />
+                        <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
+                    </label>
+                </div>
+    
+                <div class="flex items-center justify-end mt-4">
+                    @if (Route::has('password.request'))
+                        <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
+                            {{ __('Forgot your password?') }}
+                        </a>
+                    @endif
+    
+                    <x-button class="ms-4">
+                        {{ __('Log in') }}
+                    </x-button>
+                </div>
+    
+                <!-- Google Sign-In Button with Logo -->
+                <div class="mt-4">
+                    <a href="{{ url('auth/google') }}" class="flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300 ease-in-out">
+                        <img src="data:image/png;base64,
+                        iVBORw0KGgoAAAANSUhEUgAAAOEAAADh
+                        CAMAAAAJbSJIAAABUFBMVEX////qQzU0q
+                        FNChfT7vAUvfPPe6P06gfSHrPc1f/SxyPr7
+                        uQD62Nb/vQD7twDqQDHoKRLpNyYtpk7qPS4lp
+                        EnpNCIRoT/8wwAfo0bpMh/pNjcnefPpLRjoJw7
+                        80nj4+v+v2LhDgv30ran87Ov1tbHwg3z7393zoZz
+                        /+/T93Z3H1/sOpldht3V8wYwzqkCDxJLj8eb3w8D5z
+                        83sW1Dzo57uc2vrTkL85uX+9/btYlnrUkbta2Lxj4n
+                        92I37wCf+8NP95LL8zmj8yVXq8P5vnvb+9eL+6cD+7
+                        Mn914fA0/uazqbuuhHG48ykv/lVj/VBrF3A4Mfd7uG
+                        Ty6DvfXb4uXjrUDLvbyr0kR74rBHtYC7ygiT2oRfwd
+                        DqTtPiLtVm8tC6DrkGVsDxfq0rcuB5jl/WxszJVs2z
+                        LtibSy3s9j8w6mqI2onVAjNs8lbY4n4lBieb7gf+lA
+                        AAKj0lEQVR4nO2cW2PaRhqGhYzjJhjrBIpYQ0IxNtQ
+                        BAza2sU3StG7ThjrG2NvDHrLHbHa7u939/3crCYwlo
+                        ZG+GWlmhJbnJndIT76ZeeckC8KKFStWrFixYkVM7Ow
+                        d9uq1fqMxHA4bjX6t3jvc2+H9UvFw2usPLzKVcqlUL
+                        CommqZZ/yjFUqksl47uGvXNAe93JGavvnteKRcVTZI
+                        yCCTNVJW148bh0hV0s39WLpluKDU3pqec2e0tjeVO/
+                        di0A8o5ylmUTxqbvF8+nNP+uaxomHZzS6VU3D3krRD
+                        EoGbq4RbPg1YqDZNayd5xZL2ZZPmklrwBdtDXSqSNc
+                        xFJkXf3eCu5ON2NqXwPaPJZcnrk3rEcX/kekMrnPd5
+                        qNnsXVPxsx9IJ/zqe0qnf3LF8xHdgHQwrNP1sR/mY4
+                        1ynVqbtZ6HJDU5+mydFBn4WSoZLd9yVY86HACR5l7l
+                        fj3jySYamMS7jXZmpX8Yq45Ch36bGtoBTlJNTVoKNC
+                        rse6ESq1Jn4Dc5YDaGLlFkMOHuMhxg3yjn1ZVWdUwu
+                        9R1Mor6qGzMdQL1KF6oLjgl8XfKDSp+Y3OFd429mUa
+                        SXjTobnGOOkQqcv7sS9T0GMTGfJeFpKu2A57YJpr+
+                        BOMeWCA+ghEnVoCWZSLigcJSUHaQkeJ2MmQ0+wUeJtNoOWY
+                        E/mbTaDluBp2gWF+IZRyb5nUrQvnWjY8UNN8DiOYVTSlFK5eHQ
+                        3bNTq9V69XusP7840uVSEz+WpCdYijzL2FYuh37WgwV6vcQG8t
+                        EFN8LQSUU8pZ4a9wL2jzf5Z+PExNUHhJFIn1MqZBmSpOqibknw
+                        Eh1GiXpF34S+209DQc3t6gpvkbVQqan3Mjc3eOWKBRk8wQlAUJ
+                        ZLt90NfR4qCDdI2qhRrhI/saQvPpChIOo5KlSh7fd5DH4qCwhl
+                        Z1peOoh2BnR45N51pCvaIsl6SSRvoA/2HMtIUFIj2LZTzOC6G7
+                        EkaA8E+yTAT2zn09HiEquCA4IhJkuM7FLKOuKgKCkP8YUaT4jx
+                        lr1foCu7gJ4UW8+Fsj+7lkl9jl1A5o/pCcdPMbX3/KzzBY97vj
+                        MezXPbpDziKyybY3Mpms09/hCsqF7xfGZOXuayl+BNUUDvi/ca
+                        42IIWvwGVUcrwfmFcXs8Nn/4Wolhams+V7nmVnfP0d+GKFf53z
+                        TH5fCvrIDQ2SvQut9Dii5zTMCw2tGUbRk1cJQyNjWLyvk8K43U
+                        u61UMiI1yMj5qweJLr2BQbGh3vF8Xn6a3kQbGRmn52qjw2UIjn
+                        cWGryCbS8nx4ttIEbEhnfN+WwL8GykiNspJ/Zg1iMWR1KHoiY1
+                        ljMKFuPcoumNDTtZnrECCBC0csbGcJfwc3Q1nZXyIjaXshaisc
+                        Crex4a0dMteG2RWOMhNY6O4hPM1YXHW7V9GOzYU3u9KxNcgQzs
+                        2NJafysVHUBq6FH/6vryUUWHtk0L5Pe93JeNVuNmM3Evih1w+o
+                        sxlwMNh3dBi62tiwyfb61TZ/gr9bOBAY0MsKDx5vEYZ9LPfgA1
+                        zzxJsuP0c+ezwGc3c8E2CDdcfIZ8NH0q3mgk2fLyPfDZkzjaDX
+                        JCB4RPks8F+uS+SbLjxHvls+EDzWaINkXERsEfjYeubRBteox4
+                        Nj8MIec8iDzdQj/4GbhhBkIHhNurRb8Bh8SrZhuuoyIeunbLZL
+                        xNuiJp7g6c0UeZsTAxRkxq44bcJN0RNal6CDaPEIQND5LTt29Q
+                        Yvl0Zhhq+Trghauqdnhr+/xqmZyxFGaYmD2MwTPicBmmYmnkpMi1Ss7ZAGqZmfYictaVmjY+ceadlny
+                        ZgSzgle23oFXBa9kvRuxhp2fNG70Sl5dwCvZuYlrOnNeSOcFrOD9G7+mk5Aw44mWF0js/xdI3NXQyeJ
+                        6TwwTSf+wO54foGEWDDgFNu8Pop/52od0kN9z8hA6wYcFMBOtTk//hCLIxIDQl5vg4uYtDPQAzz+T+9
+                        EEVRZaU2Yx/cfQNuDIHmbWYLtQRF44qV25T30FYaFBaQWU3+77afWcMWK7cp19ASIlf4NmH3vPP5P88
+                        ERVGfsJKzuNyGGgYNpULYXf189i9zQVFtM5KzgafoevAPBX5vkf+r6IQ8MAj4ABVc+xD8Q0GJmP/bC5
+                        chyyLCG+nGu+BfQu/VzELCVUR2PfEdOO+R21D3oPLCDIkF1I9M7CzAbTRwRmODyIt5SLgwbpjoCcJb+
+                        IQGvfyd4d9MHSHhosBCz+Qa3EjDuqHg20xdIeE27DDQM2ds8BKGpKHF4mjqCQkOgw28hGFpaONtpt6Q
+                        8Iw21PWwemHAHs0D7mWwT0i4DRmEIryCIZPSGa65qV9IuDGqtAXha19AVtg4dmv8Q4JtV3wEns4AG6l
+                        zrEGFhBvKkQH3AzZSYb7AQIeEpyuOaQp+hdFGA04s3EyvnQSFhEeR4mL4HXwcNRvpJ8Bftec1wSHhaa
+                        fUBtR9jE4ImHXPeZYLCwkPBiXFS5wKrgXvsrlobn0H64KUFS/xtscBc9I5/1Cx/CgpXmJsdFvAwnBKV
+                        8c1FAuxDze4guBxxqaNXUQzNOLdt3mE2QfXtsOXFQ6a+EUUVSPO2c1brFHUImQLysttAV9R1OM7zHiP
+                        LQiPihkkhqIRU2d8/gH7kBH9PReKqkGiqMaydbO/jTfGEJVQEMb4g42F3opwE8Wm2dJ//pR+CQVhQjDY2GWM2
+                        BtHuioe/BNXkaCEgtAh6oomBZG8qd6I9lMP/rWG11AxB9IZZM3UwhiTnS7ejO97vyr+G6eMeFk454qwnVovaI
+                        zx61gVDcd/6sEvcEW86YwD4nZq17FwizPJmXQMz9MO/gOetqFvI4YRQdCkoH+swiQno7G+2CcK4//CYnE94I5
+                        Q2JPJ26mNakqOQuZy3ZuOqvs3FvUAFhsESTFnRJT7bklDb42ufGvZvaq2Rd3bOp2AYmM76C/ShNIiH1Ddlvq4
+                        1RlVb64sbqrVUac11k25sJ8HxMZjjIWvH3EYzjzVQsGYUigUVOAPq2pYbERpoxZRu2J0QmIjWhu1qPJXDIqNC
+                        OPonE7k0SYqAbEB3McPoRUl+GMBGRsb8A3EQAgXUnGCiA30xyOYiPwVDb/Y2CZZM/nS5d5OfWNjPWISuhS5jz
+                        biYmw8Jl1R+CtyzwzRGxsbZKteJPyTX3THBsnOTIhiEhrqQ2zElRNOuqHTZBbMYmNjjXjRG6SYgNCwYuN6g5K
+                        gkIjot9ZiP396TUkwCRM4i4NfqAma0/AEDKnxH1W64L+YonVpYM6E85Aa4xEeko8ck1HVmXyrc8utpRZiPkpH
+                        wqul6gw/gGhzKKOqs7o5b3PDvIzGR5Yf6ViwLaOqVxn7mUzG7AZVvcW6gFOqPidGNCioTHugizYDR1W/5eZn0
+                        m1RdlT1dtTbHVGZ0HRUeXVAN9Qczfolwc+i20Yc40ahoHeS4mfRHKlGnIVUDZH1HzUI56qlxzTRUQt6m/H3/k
+                        Ca1XF0Set6Q5W3SQDdUSRJ1QBfUeFIt9oC3EHwLV6hzW/ygslkZFtCNa3bGmo7+cXzMKl2xroR7KmabqYc6sb
+                        NMtC9GnVaoq5P75hY10ym/1iXTnRdbLVHN0z/wAY1ml37ntDo1mI0qlZvriZLW7UVK1asWLFiRfL4H/1Isc7V
+                        uwGnAAAAAElFTkSuQmCC" alt="Google Logo" class="h-5 w-5 mr-3">
+                        
+                        <span class="text-sm font-semibold">{{ __('Sign in with Google') }}</span>
+                    </a>
+                </div>
+                
+            </form>
+        </x-authentication-card>
+    </x-guest-layout>
+    
+
+    @include('home.footer')
+    
+</body>
+
+</html>
